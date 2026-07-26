@@ -10,16 +10,6 @@ export async function POST(request) {
 
   const valid = await verifyCredentials(username, password);
   if (!valid) {
-    console.log('[admin-login-debug]', JSON.stringify({
-      hasUsernameEnv: !!process.env.ADMIN_USERNAME,
-      hasHashEnv: !!process.env.ADMIN_PASSWORD_HASH,
-      hasSecretEnv: !!process.env.SESSION_SECRET,
-      envUsernameLength: (process.env.ADMIN_USERNAME || '').length,
-      envHashLength: (process.env.ADMIN_PASSWORD_HASH || '').length,
-      envHashStartsWith: (process.env.ADMIN_PASSWORD_HASH || '').slice(0, 7),
-      submittedUsername: username,
-      usernameMatches: username === process.env.ADMIN_USERNAME,
-    }));
     return NextResponse.json({ error: 'Invalid username or password.' }, { status: 401 });
   }
 
