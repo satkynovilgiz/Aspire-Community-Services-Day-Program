@@ -28,6 +28,13 @@ export default function Header() {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
   return (
     <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
       <nav className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -43,7 +50,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className={`navlinks ${open ? 'open' : ''}`} style={{ display: 'flex', gap: 34, alignItems: 'center' }}>
+        <div className={`navlinks ${open ? 'open' : ''}`}>
           {NAV.map((item) => (
             <Link
               key={item.href}
@@ -58,11 +65,23 @@ export default function Header() {
           </Link>
         </div>
 
-        <button className="hamburger" aria-label="Toggle menu" onClick={() => setOpen((v) => !v)}>
+        <button
+          className="hamburger"
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
           <span></span>
           <span></span>
           <span></span>
         </button>
+
+        <button
+          className={`nav-backdrop ${open ? 'open' : ''}`}
+          aria-hidden="true"
+          tabIndex={-1}
+          onClick={() => setOpen(false)}
+        />
       </nav>
     </header>
   );
