@@ -37,10 +37,16 @@ export async function POST(request) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   // On Vercel the filesystem is read-only, so uploads go to Vercel Blob
-  // there (auth is automatic via Vercel's OIDC token, no manual token env
-  // var needed). Locally, fall back to writing into public/uploads.
+  // there. Auth is via Vercel's auto-injected OIDC token; the store ID has
+  // to be passed explicitly since this project's Blob store env var got a
+  // non-standard name during setup (BLOB_STORE_ID_STORE_ID_STORE_ID instead
+  // of the plain BLOB_STORE_ID the SDK looks for automatically).
   if (process.env.VERCEL) {
-    const blob = await put(filename, buffer, { access: 'public', contentType: file.type });
+    const blob = await put(filename, buffer, {
+      access: 'public',
+      contentType: file.type,
+      storeId: process.env.BLOB_STORE_ID_STORE_ID_STORE_ID,
+    });
     return NextResponse.json({ url: blob.url });
   }
 
