@@ -1,5 +1,8 @@
 import Reveal from '@/components/Reveal';
 import ContactForm from '@/components/ContactForm';
+import { getContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Contact | Aspire Community Services Day Program',
@@ -26,6 +29,7 @@ const FAQS = [
 ];
 
 export default function ContactPage() {
+  const { contact } = getContent();
   return (
     <>
       <section className="contact-hero">
@@ -38,26 +42,26 @@ export default function ContactPage() {
               options — we&apos;d love to walk you through the program and answer every question.
             </p>
             <div className="contact-cta">
-              <a href="tel:14083166418" className="btn btn-gold">Call (408) 316-6418</a>
-              <a href="mailto:jgwanan@aol.com" className="btn btn-outline-light">Email Us</a>
+              <a href={contact.phoneHref} className="btn btn-gold">Call {contact.phoneDisplay}</a>
+              <a href={`mailto:${contact.email}`} className="btn btn-outline-light">Email Us</a>
             </div>
           </Reveal>
           <Reveal className="contact-info">
             <div className="info-row">
               <span className="eyebrow eyebrow-light">Administrative Address</span>
-              <div>1007 Niguel Lane<br />San Jose, CA 95138</div>
+              <div>{contact.addressLine1}<br />{contact.addressLine2}</div>
             </div>
             <div className="info-row">
               <span className="eyebrow eyebrow-light">Phone</span>
-              <div><a href="tel:14083166418">(408) 316-6418</a></div>
+              <div><a href={contact.phoneHref}>{contact.phoneDisplay}</a></div>
             </div>
             <div className="info-row">
               <span className="eyebrow eyebrow-light">Email</span>
-              <div><a href="mailto:jgwanan@aol.com">jgwanan@aol.com</a></div>
+              <div><a href={`mailto:${contact.email}`}>{contact.email}</a></div>
             </div>
             <div className="info-row">
               <span className="eyebrow eyebrow-light">Hours</span>
-              <div>Monday–Friday · 9:00 AM–3:00 PM<br />Part-time &amp; flexible schedules available</div>
+              <div>{contact.hours}<br />Part-time &amp; flexible schedules available</div>
             </div>
           </Reveal>
         </div>

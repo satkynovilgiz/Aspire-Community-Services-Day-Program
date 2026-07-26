@@ -2,6 +2,9 @@ import { Fraunces, Work_Sans, Space_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { getContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -39,12 +42,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const { contact } = getContent();
   return (
     <html lang="en" className={`${fraunces.variable} ${workSans.variable} ${spaceMono.variable}`}>
       <body>
         <Header />
         <main>{children}</main>
-        <Footer />
+        <Footer contact={contact} />
       </body>
     </html>
   );

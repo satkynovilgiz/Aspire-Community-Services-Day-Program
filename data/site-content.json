@@ -1,0 +1,29 @@
+{
+  "contact": {
+    "phoneDisplay": "(408) 316-6418",
+    "phoneHref": "tel:14083166418",
+    "email": "jgwanan@aol.com",
+    "addressLine1": "1007 Niguel Lane",
+    "addressLine2": "San Jose, CA 95138",
+    "hours": "Monday–Friday · 9:00 AM–3:00 PM"
+  },
+  "director": {
+    "name": "Dr. Janet Gwananji, Ed.D.",
+    "title": "Program Director & Licensee, Aspire Community Services Day Program",
+    "quote": "My mission is to lead with a commitment that advances the principles of inclusion, autonomy, dignity, and independence — so that when individuals walk through our doors, they feel a sense of belonging, and find joy in being part of our program.",
+    "photo": "/janet-gwananji.jpg"
+  },
+  "hero": {
+    "title": "Community isn’t a room we sit in — it’s where we live.",
+    "subtitle": "Aspire Community Services Day Program supports adults with developmental disabilities out in the real world — libraries, transit lines, farmers markets, trails — building the skills, choices, and connections that make a self-directed life possible."
+  },
+  "team": [
+    {
+      "id": "t1",
+      "name": "Ilgiz Satkynov",
+      "role": "Administrative assistant",
+      "bio": "Software Engineer ",
+      "photo": "/uploads/1785101223482-5e05589f-d23d-4c9c-8e25-a68847b68136.png"
+    }
+  ]
+}

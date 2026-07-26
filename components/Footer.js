@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Footer() {
+export default function Footer({ contact }) {
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer">
@@ -16,16 +16,21 @@ export default function Footer() {
             <Link href="/program">Our Program</Link>
             <Link href="/services">What We Do</Link>
             <Link href="/community">Community</Link>
+            <Link href="/team">Our Team</Link>
             <Link href="/contact">Contact</Link>
           </div>
         </div>
         <div className="footer-col">
           <span className="eyebrow eyebrow-light">Reach Us</span>
           <div style={{ marginTop: 16 }}>
-            <a href="tel:14083166418">(408) 316-6418</a>
-            <a href="mailto:jgwanan@aol.com">jgwanan@aol.com</a>
-            <a href="https://maps.google.com/?q=1007+Niguel+Lane+San+Jose+CA+95138" target="_blank" rel="noreferrer">
-              1007 Niguel Lane, San Jose, CA
+            <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(`${contact.addressLine1} ${contact.addressLine2}`)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {contact.addressLine1}, {contact.addressLine2}
             </a>
           </div>
         </div>

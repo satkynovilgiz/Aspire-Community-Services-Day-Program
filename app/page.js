@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
+import { getContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
+  const { hero, contact } = getContent();
   return (
     <>
       <section className="hero" id="top">
@@ -20,18 +24,8 @@ export default function Home() {
         <div className="wrap hero-inner">
           <div>
             <span className="eyebrow eyebrow-light">Regional Center Vendor · Service Code 531 · San Jose, CA</span>
-            <h1>
-              Community isn&apos;t a room
-              <br />
-              we sit in — it&apos;s <em>where
-              <br />
-              we live.</em>
-            </h1>
-            <p className="hero-sub">
-              Aspire Community Services Day Program supports adults with developmental disabilities out in the
-              real world — libraries, transit lines, farmers markets, trails — building the skills, choices, and
-              connections that make a self-directed life possible.
-            </p>
+            <h1>{hero.title}</h1>
+            <p className="hero-sub">{hero.subtitle}</p>
             <div className="hero-cta">
               <Link href="/contact" className="btn btn-gold">Schedule a Visit</Link>
               <Link href="/community" className="btn btn-outline-light">See How a Day Unfolds</Link>
@@ -104,7 +98,7 @@ export default function Home() {
           </h2>
           <div style={{ marginTop: 32, display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="btn btn-gold">Schedule a Visit</Link>
-            <a href="tel:14083166418" className="btn btn-outline-light">Call (408) 316-6418</a>
+            <a href={contact.phoneHref} className="btn btn-outline-light">Call {contact.phoneDisplay}</a>
           </div>
         </Reveal>
       </section>

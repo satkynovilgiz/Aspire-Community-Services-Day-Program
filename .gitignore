@@ -21,6 +21,13 @@ yarn-error.log*
 .env*.local
 .env
 
+# admin-uploaded images (runtime data, not source)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# admin credential overrides (set from the dashboard, not source)
+/data/admin-credentials.json
+
 # vercel
 .vercel
 

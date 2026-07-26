@@ -1,4 +1,8 @@
+import Image from 'next/image';
 import Reveal from '@/components/Reveal';
+import { getContent } from '@/lib/content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Our Program | Aspire Community Services Day Program',
@@ -48,6 +52,7 @@ const OUTCOMES = [
 ];
 
 export default function ProgramPage() {
+  const { director } = getContent();
   return (
     <>
       <section className="page-hero">
@@ -106,19 +111,32 @@ export default function ProgramPage() {
         <div className="wrap director-grid">
           <Reveal>
             <div className="director-photo">
-              <span className="initials">JG</span>
+              {director.photo ? (
+                <Image
+                  src={director.photo}
+                  alt={director.name}
+                  fill
+                  sizes="(max-width: 980px) 280px, 33vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              ) : (
+                <span className="initials">
+                  {director.name
+                    .split(' ')
+                    .filter((w) => /^[A-Z]/.test(w))
+                    .slice(0, 2)
+                    .map((w) => w[0])
+                    .join('')}
+                </span>
+              )}
             </div>
           </Reveal>
           <Reveal>
             <span className="eyebrow">A note from the Program Director</span>
-            <blockquote style={{ marginTop: 22 }}>
-              &ldquo;My mission is to lead with a commitment that advances the principles of inclusion,
-              autonomy, dignity, and independence — so that when individuals walk through our doors, they feel
-              a sense of belonging, and find joy in being part of our program.&rdquo;
-            </blockquote>
+            <blockquote style={{ marginTop: 22 }}>&ldquo;{director.quote}&rdquo;</blockquote>
             <div className="director-name">
-              <b>Dr. Janet Gwananji, Ed.D.</b>
-              <span>Program Director &amp; Licensee, Aspire Community Services Day Program</span>
+              <b>{director.name}</b>
+              <span>{director.title}</span>
             </div>
           </Reveal>
         </div>
