@@ -37,8 +37,9 @@ export async function POST(request) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   // On Vercel the filesystem is read-only, so uploads go to Vercel Blob
-  // there. Locally (no blob token), fall back to writing into public/uploads.
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
+  // there (auth is automatic via Vercel's OIDC token, no manual token env
+  // var needed). Locally, fall back to writing into public/uploads.
+  if (process.env.VERCEL) {
     const blob = await put(filename, buffer, { access: 'public', contentType: file.type });
     return NextResponse.json({ url: blob.url });
   }
