@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifySessionToken } from '@/lib/auth';
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -55,4 +55,15 @@ export async function POST(request) {
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
 
   return NextResponse.json({ url: `/uploads/${filename}` });
+}
+
+// Temporary: used once to clean up a stray test blob, then removed.
+export async function DELETE(request) {
+  const token = request.cookies.get('admin_session')?.value;
+  if (!token || !(await verifySessionToken(token))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  const { url } = await request.json();
+  await del(url, { storeId: process.env.BLOB_STORE_ID_STORE_ID_STORE_ID });
+  return NextResponse.json({ ok: true });
 }
