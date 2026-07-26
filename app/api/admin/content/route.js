@@ -12,7 +12,7 @@ export async function GET(request) {
   if (!(await requireAuth(request))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  return NextResponse.json(getContent());
+  return NextResponse.json(await getContent());
 }
 
 export async function PATCH(request) {
@@ -20,6 +20,6 @@ export async function PATCH(request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const patch = await request.json();
-  const next = updateContent(patch);
+  const next = await updateContent(patch);
   return NextResponse.json(next);
 }

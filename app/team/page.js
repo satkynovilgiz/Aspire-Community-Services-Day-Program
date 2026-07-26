@@ -17,8 +17,8 @@ function initialsFor(name) {
     .join('');
 }
 
-export default function TeamPage() {
-  const { team } = getContent();
+export default async function TeamPage() {
+  const { team } = await getContent();
   return (
     <>
       <section className="page-hero">

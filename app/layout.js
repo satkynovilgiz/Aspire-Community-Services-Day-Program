@@ -41,8 +41,8 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
-  const { contact } = getContent();
+export default async function RootLayout({ children }) {
+  const { contact } = await getContent();
   return (
     <html lang="en" className={`${fraunces.variable} ${workSans.variable} ${spaceMono.variable}`}>
       <body>

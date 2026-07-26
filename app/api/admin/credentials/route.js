@@ -25,13 +25,13 @@ export async function PATCH(request) {
     return NextResponse.json({ error: 'New password must be at least 8 characters.' }, { status: 400 });
   }
 
-  const { username, passwordHash } = getCredentials();
+  const { username, passwordHash } = await getCredentials();
   const valid = await bcrypt.compare(currentPassword, passwordHash);
   if (!valid) {
     return NextResponse.json({ error: 'Current password is incorrect.' }, { status: 401 });
   }
 
-  const updated = setCredentials({
+  const updated = await setCredentials({
     username: newUsername || username,
     passwordHash: newPassword ? bcrypt.hashSync(newPassword, 12) : passwordHash,
   });

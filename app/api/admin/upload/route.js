@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifySessionToken } from '@/lib/auth';
+import { put } from '@vercel/blob';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -32,11 +33,18 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Image must be under 5MB.' }, { status: 400 });
   }
 
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-  fs.mkdirSync(uploadsDir, { recursive: true });
-
   const filename = `${Date.now()}-${crypto.randomUUID()}.${ext}`;
   const buffer = Buffer.from(await file.arrayBuffer());
+
+  // On Vercel the filesystem is read-only, so uploads go to Vercel Blob
+  // there. Locally (no blob token), fall back to writing into public/uploads.
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(filename, buffer, { access: 'public', contentType: file.type });
+    return NextResponse.json({ url: blob.url });
+  }
+
+  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+  fs.mkdirSync(uploadsDir, { recursive: true });
   fs.writeFileSync(path.join(uploadsDir, filename), buffer);
 
   return NextResponse.json({ url: `/uploads/${filename}` });

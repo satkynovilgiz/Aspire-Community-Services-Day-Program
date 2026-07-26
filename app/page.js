@@ -4,8 +4,8 @@ import { getContent } from '@/lib/content';
 
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
-  const { hero, contact } = getContent();
+export default async function Home() {
+  const { hero, contact } = await getContent();
   return (
     <>
       <section className="hero" id="top">

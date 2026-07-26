@@ -28,8 +28,8 @@ const FAQS = [
   },
 ];
 
-export default function ContactPage() {
-  const { contact } = getContent();
+export default async function ContactPage() {
+  const { contact } = await getContent();
   return (
     <>
       <section className="contact-hero">

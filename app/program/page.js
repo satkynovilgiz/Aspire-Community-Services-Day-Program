@@ -51,8 +51,8 @@ const OUTCOMES = [
   { title: 'Deeper Community Ties', body: 'Real, natural relationships built outside the program itself.' },
 ];
 
-export default function ProgramPage() {
-  const { director } = getContent();
+export default async function ProgramPage() {
+  const { director } = await getContent();
   return (
     <>
       <section className="page-hero">
