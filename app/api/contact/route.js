@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const CONTACT_RECIPIENT = 'satkynovilgiz2008@gmail.com';
+const CONTACT_RECIPIENT = 'jgwanan@aol.com';
 
 export async function POST(request) {
   let data;
