@@ -42,7 +42,7 @@ export default async function Home() {
             </div>
             <div className="hero-fact">
               <b>100%</b>
-              <span>We believe skills are best learned where they will be used!
+              <span>Community based. We believe skills are best learned where they will be used!
 </span>
             </div>
           </div>
