@@ -41,8 +41,8 @@ export default async function Home() {
               <span>Monday through Friday, with part-time and flexible schedules available.</span>
             </div>
             <div className="hero-fact">
-              <b>Zero</b>
-              <span>Fixed facility. Every day happens in an integrated community setting.</span>
+              <b>100%</b>
+              <span>Community-based. Every day happens out in an integrated, real-world setting.</span>
             </div>
           </div>
         </div>
