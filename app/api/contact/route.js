@@ -37,13 +37,14 @@ export async function POST(request) {
       },
     });
 
-    await transporter.sendMail({
-      from: `ACSDP Website <${process.env.GMAIL_USER}>`,
+    const info = await transporter.sendMail({
+      from: `Aspire Community Services <${process.env.GMAIL_USER}>`,
       to: CONTACT_RECIPIENT,
       replyTo: email,
-      subject: `New inquiry from ${name}`,
-      text: `${name} (${email}, ${phone || 'no phone'}) — ${relationship || 'no relationship given'}\n\n${message}`,
+      subject: `New contact form message from ${name}`,
+      text: `Hi,\n\nYou have a new message from the ACSDP website contact form.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'not provided'}\nRelationship: ${relationship || 'not provided'}\n\nMessage:\n${message}\n\n--\nYou can reply directly to this email to respond to ${name}.`,
     });
+    console.log('Gmail SMTP response:', JSON.stringify(info, null, 2));
   } catch (err) {
     console.error('Failed to send contact email:', err);
     return Response.json({ error: 'Message received but email delivery failed.' }, { status: 502 });
