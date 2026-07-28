@@ -61,8 +61,8 @@ export default async function ProgramPage() {
             <span className="eyebrow eyebrow-light">Our Program</span>
             <h1>Built on choice, dignity, and full community participation.</h1>
             <p>
-              Aspire Community Services Day Program (ACSDP) exists to help adults with developmental
-              disabilities lead self-directed lives — not inside a facility, but out in the community they
+              Aspire Community Services Day Program (ACSDP) exists to help Individuals
+               lead self-directed lives — not inside a facility, but out in the community they
               already belong to.
             </p>
           </Reveal>
