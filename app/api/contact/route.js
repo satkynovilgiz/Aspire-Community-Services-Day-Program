@@ -1,3 +1,7 @@
+import { Resend } from 'resend';
+
+const CONTACT_RECIPIENT = 'jgwanan@aol.com';
+
 export async function POST(request) {
   let data;
   try {
@@ -17,24 +21,26 @@ export async function POST(request) {
     return Response.json({ error: 'Please enter a valid email address.' }, { status: 400 });
   }
 
-  // -----------------------------------------------------------------------
-  // This logs the inquiry to the server console. To actually deliver these
-  // messages to jgwanan@aol.com, wire up an email provider here — for
-  // example Resend (https://resend.com):
-  //
-  //   import { Resend } from 'resend';
-  //   const resend = new Resend(process.env.RESEND_API_KEY);
-  //   await resend.emails.send({
-  //     from: 'ACSDP Website <onboarding@resend.dev>',
-  //     to: 'jgwanan@aol.com',
-  //     subject: `New inquiry from ${name}`,
-  //     text: `${name} (${email}, ${phone || 'no phone'}) — ${relationship}\n\n${message}`,
-  //   });
-  //
-  // Add RESEND_API_KEY as an Environment Variable in the Vercel project
-  // settings once you have a provider set up.
-  // -----------------------------------------------------------------------
   console.log('New ACSDP contact inquiry:', { name, email, relationship, phone, message });
+
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('RESEND_API_KEY is not set — contact inquiry was logged but not emailed.');
+    return Response.json({ success: true });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { error: sendError } = await resend.emails.send({
+    from: 'ACSDP Website <onboarding@resend.dev>',
+    to: CONTACT_RECIPIENT,
+    replyTo: email,
+    subject: `New inquiry from ${name}`,
+    text: `${name} (${email}, ${phone || 'no phone'}) — ${relationship || 'no relationship given'}\n\n${message}`,
+  });
+
+  if (sendError) {
+    console.error('Failed to send contact email:', sendError);
+    return Response.json({ error: 'Message received but email delivery failed.' }, { status: 502 });
+  }
 
   return Response.json({ success: true });
 }
