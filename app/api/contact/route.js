@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 const CONTACT_RECIPIENT = 'jgwanan@aol.com';
 
@@ -23,22 +23,29 @@ export async function POST(request) {
 
   console.log('New ACSDP contact inquiry:', { name, email, relationship, phone, message });
 
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY is not set — contact inquiry was logged but not emailed.');
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.warn('GMAIL_USER / GMAIL_APP_PASSWORD are not set — contact inquiry was logged but not emailed.');
     return Response.json({ success: true });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const { error: sendError } = await resend.emails.send({
-    from: 'ACSDP Website <onboarding@resend.dev>',
-    to: CONTACT_RECIPIENT,
-    replyTo: email,
-    subject: `New inquiry from ${name}`,
-    text: `${name} (${email}, ${phone || 'no phone'}) — ${relationship || 'no relationship given'}\n\n${message}`,
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    });
 
-  if (sendError) {
-    console.error('Failed to send contact email:', sendError);
+    await transporter.sendMail({
+      from: `ACSDP Website <${process.env.GMAIL_USER}>`,
+      to: CONTACT_RECIPIENT,
+      replyTo: email,
+      subject: `New inquiry from ${name}`,
+      text: `${name} (${email}, ${phone || 'no phone'}) — ${relationship || 'no relationship given'}\n\n${message}`,
+    });
+  } catch (err) {
+    console.error('Failed to send contact email:', err);
     return Response.json({ error: 'Message received but email delivery failed.' }, { status: 502 });
   }
 
