@@ -8,7 +8,7 @@ export default function Footer({ contact }) {
         <div className="footer-col">
           <span className="eyebrow eyebrow-light">Aspire Community Services</span>
           <h4>Day Program</h4>
-          <p>Person-centered, community-based services for adults with developmental disabilities in San Jose, CA.</p>
+          <p>Person-centered, community-based services for individuals in San Jose, CA.</p>
         </div>
         <div className="footer-col">
           <span className="eyebrow eyebrow-light">Explore</span>

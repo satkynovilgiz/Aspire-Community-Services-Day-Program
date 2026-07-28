@@ -31,12 +31,12 @@ const spaceMono = Space_Mono({
 export const metadata = {
   title: 'Aspire Community Services Day Program | San Jose, CA',
   description:
-    'Aspire Community Services Day Program (ACSDP) is a person-centered, community-based day program for adults with developmental disabilities in San Jose, CA. Regional Center vendor, service code 531.',
+    'Aspire Community Services Day Program (ACSDP) is a person-centered, community-based day program for individuals in San Jose, CA. Regional Center vendor, service code 531.',
   metadataBase: new URL('https://aspire-community-services.vercel.app'),
   openGraph: {
     title: 'Aspire Community Services Day Program',
     description:
-      'Person-centered, community-based day services for adults with developmental disabilities in San Jose, CA.',
+      'Person-centered, community-based day services for individuals in San Jose, CA.',
     type: 'website',
   },
 };
