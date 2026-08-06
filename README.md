@@ -1,6 +1,6 @@
 # Aspire Community Services Day Program — Website
 
-A Next.js 14 (App Router) site for Aspire Community Services Day Program (ACSDP), a
+A Next.js 14 site for Aspire Community Services Day Program (ACSDP), a
 community-based day program in San Jose, CA.
 
 # Pages
