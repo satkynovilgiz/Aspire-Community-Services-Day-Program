@@ -3,7 +3,7 @@
 A Next.js 14 (App Router) site for Aspire Community Services Day Program (ACSDP), a
 community-based day program in San Jose, CA.
 
-## Pages
+# Pages
 
 - `/` — Home
 - `/program` — Mission, vision, Program Design Statement, director's note, outcomes
@@ -14,7 +14,7 @@ community-based day program in San Jose, CA.
 - `/admin` — Password-protected dashboard for editing contact info, the director
   profile, the homepage hero text, and the team list (see **Admin panel** below)
 
-## Run it locally
+# Run it locally
 
 Requires Node.js 18.18+ (Node 20 LTS recommended).
 
