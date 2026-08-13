@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
+import { getContent } from '@/lib/content';
 
-const CONTACT_RECIPIENT = 'jgwanan@aol.com';
+const DEFAULT_CONTACT_RECIPIENT = 'jgwanan@aol.com';
 
 export async function POST(request) {
   let data;
@@ -29,6 +30,9 @@ export async function POST(request) {
   }
 
   try {
+    const { contact } = await getContent();
+    const recipient = contact?.email || DEFAULT_CONTACT_RECIPIENT;
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -39,7 +43,7 @@ export async function POST(request) {
 
     const info = await transporter.sendMail({
       from: `Aspire Community Services <${process.env.GMAIL_USER}>`,
-      to: CONTACT_RECIPIENT,
+      to: recipient,
       replyTo: email,
       subject: `New contact form message from ${name}`,
       text: `Hi,\n\nYou have a new message from the ACSDP website contact form.\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'not provided'}\nRelationship: ${relationship || 'not provided'}\n\nMessage:\n${message}\n\n--\nYou can reply directly to this email to respond to ${name}.`,
