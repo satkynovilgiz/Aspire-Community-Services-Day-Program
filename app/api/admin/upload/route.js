@@ -37,16 +37,10 @@ export async function POST(request) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   // On Vercel the filesystem is read-only, so uploads go to Vercel Blob
-  // there. Auth is via Vercel's auto-injected OIDC token; the store ID has
-  // to be passed explicitly since this project's Blob store env var got a
-  // non-standard name during setup (BLOB_STORE_ID_STORE_ID_STORE_ID instead
-  // of the plain BLOB_STORE_ID the SDK looks for automatically).
+  // there instead, authenticated via the store's BLOB_READ_WRITE_TOKEN
+  // (auto-injected once a Blob store is connected to the project).
   if (process.env.VERCEL) {
-    const blob = await put(filename, buffer, {
-      access: 'public',
-      contentType: file.type,
-      storeId: process.env.BLOB_STORE_ID_STORE_ID_STORE_ID,
-    });
+    const blob = await put(filename, buffer, { access: 'public', contentType: file.type });
     return NextResponse.json({ url: blob.url });
   }
 
